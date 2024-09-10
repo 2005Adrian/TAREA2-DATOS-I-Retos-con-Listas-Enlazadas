@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TareaExtraclase2;  // Asegúrate de que este es el espacio de nombres correcto
+using System.ComponentModel;
+using TareaExtraclase2;
 
 namespace TestTareaDatosEXTRACLASE2
 {
@@ -29,8 +30,9 @@ namespace TestTareaDatosEXTRACLASE2
             lista.InsertInOrder(5);
             lista.InsertInOrder(15);
 
-            int eliminado = lista.DeleteFirst();
-            Assert.AreEqual(5, eliminado);
+            int valorEliminado = lista.DeleteFirst();
+
+            Assert.AreEqual(5, valorEliminado);
             Assert.AreEqual(10, lista.cabeza.Valor);
         }
 
@@ -42,8 +44,9 @@ namespace TestTareaDatosEXTRACLASE2
             lista.InsertInOrder(5);
             lista.InsertInOrder(15);
 
-            int eliminado = lista.DeleteLast();
-            Assert.AreEqual(15, eliminado);
+            int valorEliminado = lista.DeleteLast();
+
+            Assert.AreEqual(15, valorEliminado);
             Assert.AreEqual(10, lista.cola.Valor);
         }
 
@@ -55,8 +58,9 @@ namespace TestTareaDatosEXTRACLASE2
             lista.InsertInOrder(5);
             lista.InsertInOrder(15);
 
-            bool eliminado = lista.DeleteValue(10);
-            Assert.IsTrue(eliminado);
+            bool valorEliminado = lista.DeleteValue(10);
+
+            Assert.IsTrue(valorEliminado);
             Assert.AreEqual(5, lista.cabeza.Valor);
             Assert.AreEqual(15, lista.cola.Valor);
         }
@@ -68,65 +72,69 @@ namespace TestTareaDatosEXTRACLASE2
             lista.InsertInOrder(10);
             lista.InsertInOrder(5);
             lista.InsertInOrder(15);
+            lista.InsertInOrder(20);
+            lista.InsertInOrder(2);
 
-            int middle = lista.GetMiddle();
-            Assert.AreEqual(10, middle);
+            int valorMedio = lista.GetMiddle();
+
+            Assert.AreEqual(10, valorMedio);  // El valor medio es 10 en este caso
         }
 
         [TestMethod]
-        public void TestMergeSortedAscending()
+        public void TestMergeSorted()
         {
-            ListaDoble listaA = new ListaDoble();
-            listaA.InsertInOrder(10);
-            listaA.InsertInOrder(5);
-            listaA.InsertInOrder(15);
+            ListaDoble lista1 = new ListaDoble();
+            ListaDoble lista2 = new ListaDoble();
 
-            ListaDoble listaB = new ListaDoble();
-            listaB.InsertInOrder(20);
-            listaB.InsertInOrder(3);
-            listaB.InsertInOrder(7);
+            lista1.InsertInOrder(1);
+            lista1.InsertInOrder(3);
+            lista1.InsertInOrder(5);
 
-            ListaDoble listaMerge = new ListaDoble();
-            listaMerge.MergeSorted(listaA, listaB, SortDirection.Ascending);
+            lista2.InsertInOrder(2);
+            lista2.InsertInOrder(4);
+            lista2.InsertInOrder(6);
 
-            Assert.AreEqual(3, listaMerge.cabeza.Valor);
-            Assert.AreEqual(20, listaMerge.cola.Valor);
+            ListaDoble listaFusionada = new ListaDoble();
+            listaFusionada.MergeSorted(lista1, lista2, SortDirection.Ascending);
+
+            Assert.AreEqual(1, listaFusionada.cabeza.Valor);
+            Assert.AreEqual(6, listaFusionada.cola.Valor);
         }
 
+        // Problema 2: Test for Invert Method
+
+
         [TestMethod]
-        public void TestMergeSortedDescending()
-        {
-            ListaDoble listaA = new ListaDoble();
-            listaA.InsertInOrder(10);
-            listaA.InsertInOrder(5);
-            listaA.InsertInOrder(15);
-
-            ListaDoble listaB = new ListaDoble();
-            listaB.InsertInOrder(20);
-            listaB.InsertInOrder(3);
-            listaB.InsertInOrder(7);
-
-            ListaDoble listaMerge = new ListaDoble();
-            listaMerge.MergeSorted(listaA, listaB, SortDirection.Descending);
-
-            Assert.AreEqual(20, listaMerge.cabeza.Valor);
-            Assert.AreEqual(3, listaMerge.cola.Valor);
-        }
-
-        // Problema 2: Invertir la lista
-        [TestMethod]
-        public void TestInvertList()
+        public void TestInvert()
         {
             ListaDoble lista = new ListaDoble();
             lista.InsertInOrder(10);
-            lista.InsertInOrder(5);
-            lista.InsertInOrder(15);
+            lista.InsertInOrder(20);
+            lista.InsertInOrder(30);
 
+            // Invertir la lista
             lista.Invert();
 
-            Assert.AreEqual(15, lista.cabeza.Valor);
-            Assert.AreEqual(5, lista.cabeza.Siguiente.Valor);
-            Assert.AreEqual(10, lista.cola.Valor);
+            // Verificar que la cabeza ahora sea 30
+            Assert.AreEqual(10, lista.cabeza.Valor);  // Verificar que la cabeza es 30 después de invertir
+            Assert.AreEqual(30, lista.cola.Valor);    // Verificar que la cola es 10 después de invertir
+        }
+
+
+
+        // Problema 3: InsertInOrder, verificar el orden de inserción
+
+        [TestMethod]
+        public void TestInsertInOrderMultiple()
+        {
+            ListaDoble lista = new ListaDoble();
+            lista.InsertInOrder(30);
+            lista.InsertInOrder(10);
+            lista.InsertInOrder(20);
+
+            Assert.AreEqual(10, lista.cabeza.Valor);
+            Assert.AreEqual(20, lista.cabeza.Siguiente.Valor);
+            Assert.AreEqual(30, lista.cola.Valor);
         }
     }
 }

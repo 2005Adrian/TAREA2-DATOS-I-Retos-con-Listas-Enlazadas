@@ -184,22 +184,25 @@ namespace TareaExtraclase2
             Nodo actual = cabeza;
             Nodo temp = null;
 
+            // Intercambiar los punteros siguiente y anterior en cada nodo
             while (actual != null)
             {
-                // Intercambiar los punteros Siguiente y Anterior
                 temp = actual.Anterior;
                 actual.Anterior = actual.Siguiente;
                 actual.Siguiente = temp;
 
-                actual = actual.Anterior; // Moverse hacia el siguiente nodo, que ahora es el anterior
+                // Moverse hacia el siguiente nodo, que ahora es el anterior
+                actual = actual.Anterior;
             }
 
-            // Al final del ciclo, temp es la nueva cabeza
+            // Al final del ciclo, temp apuntará a la nueva cabeza
             if (temp != null)
             {
-                cabeza = temp.Anterior; // temp.Anterior apunta al nuevo primer nodo
+                cabeza = temp.Anterior;  // temp.Anterior apunta al último nodo procesado, que es la nueva cabeza
             }
         }
+
+
 
         //PROBLEMA 3
         public void InsertInOrder(int value)
