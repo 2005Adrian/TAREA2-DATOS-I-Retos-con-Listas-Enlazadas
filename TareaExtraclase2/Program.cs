@@ -1,50 +1,61 @@
-﻿using System.ComponentModel;
-using TareaExtraclase2;
+﻿using System;
+using System.Collections.Generic;
 
-class Program
+namespace TareaExtraclase2
 {
-    static void Main(string[] args)
+    class Program
     {
-        // Crear listas de prueba
-        ListaDoble lista1 = new ListaDoble();
-        ListaDoble lista2 = new ListaDoble();
-
-        // Insertar elementos en la primera lista
-        lista1.InsertInOrder(1);
-        lista1.InsertInOrder(3);
-        lista1.InsertInOrder(5);
-
-        // Insertar elementos en la segunda lista
-        lista2.InsertInOrder(2);
-        lista2.InsertInOrder(4);
-        lista2.InsertInOrder(6);
-
-        // Fusionar listas de forma ascendente
-        ListaDoble listaFusionada = new ListaDoble();
-        listaFusionada.MergeSorted(lista1, lista2, SortDirection.Ascending);
-
-        // Mostrar la lista fusionada
-        Console.WriteLine("Lista fusionada (ascendente):");
-        var nodoActual = listaFusionada.cabeza;
-        while (nodoActual != null)
+        static void Main(string[] args)
         {
-            Console.Write(nodoActual.Valor + " ");
-            nodoActual = nodoActual.Siguiente;
+            // Test para el Problema 1: InsertInOrder
+            Console.WriteLine("Probando InsertInOrder...");
+            ListaDoble lista = new ListaDoble();
+            lista.InsertInOrder(10);
+            lista.InsertInOrder(5);
+            lista.InsertInOrder(20);
+            lista.InsertInOrder(15);
+            ImprimirLista(lista, "Lista después de InsertInOrder:");
+
+            // Test para el Problema 2: Invert
+            Console.WriteLine("\nProbando Invert...");
+            lista.Invert();
+            ImprimirLista(lista, "Lista después de Invertir:");
+
+            // Test para el Problema 3: MergeSorted
+            Console.WriteLine("\nProbando MergeSorted...");
+            ListaDoble listaA = new ListaDoble();
+            listaA.InsertInOrder(1);
+            listaA.InsertInOrder(4);
+            listaA.InsertInOrder(6);
+
+            ListaDoble listaB = new ListaDoble();
+            listaB.InsertInOrder(2);
+            listaB.InsertInOrder(3);
+            listaB.InsertInOrder(5);
+
+            ListaDoble listaMerged = new ListaDoble();
+            listaMerged.MergeSorted(listaA, listaB, SortDirection.Ascending);
+            ImprimirLista(listaMerged, "Lista después de MergeSorted (Ascendente):");
+
+            // Prueba con MergeSorted en orden descendente
+            ListaDoble listaMergedDesc = new ListaDoble();
+            listaMergedDesc.MergeSorted(listaA, listaB, SortDirection.Descending);
+            ImprimirLista(listaMergedDesc, "Lista después de MergeSorted (Descendente):");
+
+            Console.ReadLine();
         }
 
-        Console.WriteLine("\nMedio de la lista fusionada: " + listaFusionada.GetMiddle());
-
-        // Invertir la lista
-        Console.WriteLine("Invirtiendo la lista...");
-        listaFusionada.Invert();
-        nodoActual = listaFusionada.cabeza;
-        Console.WriteLine("Lista invertida:");
-        while (nodoActual != null)
+        // Método para imprimir la lista
+        static void ImprimirLista(ListaDoble lista, string titulo)
         {
-            Console.Write(nodoActual.Valor + " ");
-            nodoActual = nodoActual.Siguiente;
+            Console.WriteLine(titulo);
+            ListaDoble.Nodo actual = lista.cabeza;
+            while (actual != null)
+            {
+                Console.Write(actual.Valor + " ");
+                actual = actual.Siguiente;
+            }
+            Console.WriteLine();
         }
-
-        Console.ReadKey();
     }
 }
