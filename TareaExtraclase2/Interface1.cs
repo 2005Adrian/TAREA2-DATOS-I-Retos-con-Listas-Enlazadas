@@ -122,45 +122,64 @@ namespace TareaExtraclase2
         {
             Nodo currentA = ((ListaDoble)listA).cabeza;
             Nodo currentB = ((ListaDoble)listB).cabeza;
-            Nodo nuevoNodo = null;
 
             // Limpiar la lista actual
             cabeza = null;
             cola = null;
 
-            while (currentA != null && currentB != null)
-            {
-                if ((direction == SortDirection.Ascending && currentA.Valor <= currentB.Valor) ||
-                    (direction == SortDirection.Descending && currentA.Valor >= currentB.Valor))
-                {
-                    nuevoNodo = new Nodo(currentA.Valor);
-                    currentA = currentA.Siguiente;
-                }
-                else
-                {
-                    nuevoNodo = new Nodo(currentB.Valor);
-                    currentB = currentB.Siguiente;
-                }
-
-                InsertarNodo(nuevoNodo);
-            }
-
-            // Agregar los elementos restantes de listA, si hay
+            // Paso 1: Fusionar las dos listas en una sola
             while (currentA != null)
             {
-                nuevoNodo = new Nodo(currentA.Valor);
-                InsertarNodo(nuevoNodo);
+                InsertarNodo(new Nodo(currentA.Valor));
                 currentA = currentA.Siguiente;
             }
 
-            // Agregar los elementos restantes de listB, si hay
             while (currentB != null)
             {
-                nuevoNodo = new Nodo(currentB.Valor);
-                InsertarNodo(nuevoNodo);
+                InsertarNodo(new Nodo(currentB.Valor));
                 currentB = currentB.Siguiente;
             }
+
+            // Paso 2: Ordenar la lista fusionada
+            OrdenarLista(direction);
         }
+
+        private void OrdenarLista(SortDirection direction)
+        {
+            // Convertimos la lista enlazada en una lista común para facilitar la ordenación
+            List<int> valores = new List<int>();
+            Nodo actual = cabeza;
+
+            // Extraer los valores de la lista enlazada
+            while (actual != null)
+            {
+                valores.Add(actual.Valor);
+                actual = actual.Siguiente;
+            }
+
+            // Ordenar los valores según la dirección especificada
+            if (direction == SortDirection.Ascending)
+            {
+                valores.Sort(); // Ascendente (menor a mayor)
+            }
+            else
+            {
+                valores.Sort();
+                valores.Reverse(); // Descendente (mayor a menor)
+            }
+
+            // Reconstruir la lista enlazada con los valores ordenados
+            cabeza = null;
+            cola = null;
+
+            foreach (int valor in valores)
+            {
+                InsertarNodo(new Nodo(valor));
+            }
+        }
+
+
+
 
 
         private void InsertarNodo(Nodo nuevoNodo)
@@ -244,6 +263,7 @@ namespace TareaExtraclase2
             nuevoNodo.Anterior = actual;
 
         }
+        //PROBLEMA 3
         public int GetMiddle()
         {
             if (cabeza == null)

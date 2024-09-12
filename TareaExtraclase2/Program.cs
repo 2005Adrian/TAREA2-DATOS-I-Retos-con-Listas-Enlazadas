@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace TareaExtraclase2
 {
@@ -7,53 +6,78 @@ namespace TareaExtraclase2
     {
         static void Main(string[] args)
         {
-            // Test para el Problema 1: InsertInOrder
-            Console.WriteLine("Probando InsertInOrder...");
-            ListaDoble lista = new ListaDoble();
-            lista.InsertInOrder(10);
-            lista.InsertInOrder(5);
-            lista.InsertInOrder(20);
-            lista.InsertInOrder(15);
-            ImprimirLista(lista, "Lista después de InsertInOrder:");
+            // Crear dos listas para pruebas generales
+            ListaDoble lista1 = new ListaDoble();
+            ListaDoble lista2 = new ListaDoble();
 
-            // Test para el Problema 2: Invert
-            Console.WriteLine("\nProbando Invert...");
-            lista.Invert();
-            ImprimirLista(lista, "Lista después de Invertir:");
+            // Prueba de InsertInOrder
+            Console.WriteLine("----- Prueba InsertInOrder -----");
+            lista1.InsertInOrder(10);
+            lista1.InsertInOrder(5);
+            lista1.InsertInOrder(15);
+            MostrarLista(lista1);
 
-            // Test para el Problema 3: MergeSorted
-            Console.WriteLine("\nProbando MergeSorted...");
-            ListaDoble listaA = new ListaDoble();
-            listaA.InsertInOrder(1);
-            listaA.InsertInOrder(4);
-            listaA.InsertInOrder(6);
+            // Prueba de DeleteFirst
+            Console.WriteLine("\n----- Prueba DeleteFirst -----");
+            int valorEliminado = lista1.DeleteFirst();
+            Console.WriteLine($"Valor eliminado (primero): {valorEliminado}");
+            MostrarLista(lista1);
 
-            ListaDoble listaB = new ListaDoble();
-            listaB.InsertInOrder(2);
-            listaB.InsertInOrder(3);
-            listaB.InsertInOrder(5);
+            // Prueba de DeleteLast
+            Console.WriteLine("\n----- Prueba DeleteLast -----");
+            valorEliminado = lista1.DeleteLast();
+            Console.WriteLine($"Valor eliminado (último): {valorEliminado}");
+            MostrarLista(lista1);
 
-            ListaDoble listaMerged = new ListaDoble();
-            listaMerged.MergeSorted(listaA, listaB, SortDirection.Ascending);
-            ImprimirLista(listaMerged, "Lista después de MergeSorted (Ascendente):");
+            // Prueba de DeleteValue
+            Console.WriteLine("\n----- Prueba DeleteValue -----");
+            lista1.InsertInOrder(20);
+            lista1.InsertInOrder(30);
+            bool valorEliminadoBool = lista1.DeleteValue(20);
+            Console.WriteLine($"¿Valor eliminado (20)?: {valorEliminadoBool}");
+            MostrarLista(lista1);
 
-            // Prueba con MergeSorted en orden descendente
-            ListaDoble listaMergedDesc = new ListaDoble();
-            listaMergedDesc.MergeSorted(listaA, listaB, SortDirection.Descending);
-            ImprimirLista(listaMergedDesc, "Lista después de MergeSorted (Descendente):");
+            // ----- Sección de pruebas identificadas -----
 
-            Console.ReadLine();
+            // Prueba de MergeSorted en orden ascendente
+            Console.WriteLine("\n----- Prueba MergeSorted Ascendente -----");
+            lista1.InsertInOrder(1);
+            lista1.InsertInOrder(0);
+            lista1.InsertInOrder(5);
+
+            lista2.InsertInOrder(2);
+            lista2.InsertInOrder(90);
+            lista2.InsertInOrder(6);
+
+            ListaDoble listaFusionada = new ListaDoble();
+            listaFusionada.MergeSorted(lista1, lista2, SortDirection.Ascending);
+            MostrarLista(listaFusionada);
+
+            // Prueba de MergeSorted en orden descendente
+            Console.WriteLine("\n----- Prueba MergeSorted Descendente -----");
+            ListaDoble listaFusionadaDesc = new ListaDoble();
+            listaFusionadaDesc.MergeSorted(lista1, lista2, SortDirection.Descending);
+            MostrarLista(listaFusionadaDesc);
+
+            // Prueba de Invert
+            Console.WriteLine("\n----- Prueba Invert -----");
+            listaFusionada.Invert();
+            MostrarLista(listaFusionada);
+
+            // Prueba de GetMiddle
+            Console.WriteLine("\n----- Prueba GetMiddle -----");
+            int valorMedio = listaFusionada.GetMiddle();
+            Console.WriteLine($"El valor medio de la lista es: {valorMedio}");
         }
 
-        // Método para imprimir la lista
-        static void ImprimirLista(ListaDoble lista, string titulo)
+        static void MostrarLista(ListaDoble lista)
         {
-            Console.WriteLine(titulo);
-            ListaDoble.Nodo actual = lista.cabeza;
-            while (actual != null)
+            var nodo = lista.cabeza;
+            Console.Write("Lista: ");
+            while (nodo != null)
             {
-                Console.Write(actual.Valor + " ");
-                actual = actual.Siguiente;
+                Console.Write(nodo.Valor + " ");
+                nodo = nodo.Siguiente;
             }
             Console.WriteLine();
         }

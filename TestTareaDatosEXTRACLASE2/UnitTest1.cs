@@ -116,7 +116,7 @@ namespace TestTareaDatosEXTRACLASE2
             lista.Invert();
 
             // Verificar que la cabeza ahora sea 30
-            Assert.AreEqual(10, lista.cabeza.Valor);  // Verificar que la cabeza es 30 después de invertir
+            Assert.AreEqual(30, lista.cabeza.Valor);  // Verificar que la cabeza es 30 después de invertir
             Assert.AreEqual(30, lista.cola.Valor);    // Verificar que la cola es 10 después de invertir
         }
 
